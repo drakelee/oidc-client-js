@@ -45,7 +45,8 @@
     "webpack-stream": "^3.2.0"
   },
   "dependencies": {
-    "jsrsasign": "^5.0.7"
+    "babel-preset-es2017": "^6.24.1",
+    "idtoken-verifier": "drakelee/idtoken-verifier.git#5f1145c"
   },
   "peerDependencies": {
     "babel-polyfill": ">=6.9.1"

@@ -8,16 +8,17 @@ var createWebpackConfig = function(options) {
       fs: 'empty', // Because of jsrsasign usage of fs
       buffer: 'empty',
     },
-    module: {
-      loaders: [
-        {
-          test: /.js$/,
-          loaders: ['babel'],
-          exclude: /node_modules/,
-          include: __dirname
-        }
-      ]
-    },
+      module: {
+          loaders: [
+              {
+                  test: /\.js$/,
+                  loader: 'babel-loader',
+                  query: {
+                      presets: ['es2015']
+                  }
+              }
+          ]
+      },
     // this is for the sourcemaps
     devtool: options.devtool
   };

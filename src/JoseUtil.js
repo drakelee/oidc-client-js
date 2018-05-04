@@ -1,8 +1,9 @@
 // Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-import { jws, KEYUTIL as KeyUtil, X509, crypto, hextob64u } from 'jsrsasign';
+// import { jws, KEYUTIL as KeyUtil, X509, crypto, hextob64u } from 'jsrsasign';
 import Log from './Log';
+import IdTokenVerifier from 'idtoken-verifier'
 
 const AllowedSigningAlgs = ['RS256', 'RS384', 'RS512', 'PS256', 'PS384', 'PS512', 'ES256', 'ES384', 'ES512'];
 
@@ -11,10 +12,17 @@ export default class JoseUtil {
     static parseJwt(jwt) {
         Log.debug("JoseUtil.parseJwt");
         try {
-            var token = jws.JWS.parse(jwt);
-            return {
-                header: token.headerObj,
-                payload: token.payloadObj
+            const parameters = {
+                expectedAlg: 'RS256'
+            }
+            const idTokenVerifier = new IdTokenVerifier(parameters)
+
+            const token = idTokenVerifier.decode(jwt)
+            if (token.header && token.payload) {
+                return {
+                    header: token.header,
+                    payload: token.payload
+                }
             }
         }
         catch (e) {
@@ -22,36 +30,37 @@ export default class JoseUtil {
         }
     }
 
-    static validateJwt(jwt, key, issuer, audience, clockSkew, now) {
+    static validateJwt(jwt, key, issuer, audience, clockSkew, now, cb) {
         Log.debug("JoseUtil.validateJwt");
 
         try {
-            if (key.kty === "RSA") {
-                if (key.e && key.n) {
-                    key = KeyUtil.getKey(key);
-                }
-                else if (key.x5c && key.x5c.length) {
-                    key = KeyUtil.getKey(X509.getPublicKeyFromCertPEM(key.x5c[0]));
-                }
-                else {
-                    Log.error("RSA key missing key material", key);
-                    return Promise.reject(new Error("RSA key missing key material"));
-                }
-            }
-            else if (key.kty === "EC") {
-                if (key.crv && key.x && key.y) {
-                    key = KeyUtil.getKey(key);
-                }
-                else {
-                    Log.error("EC key missing key material", key);
-                    return Promise.reject(new Error("EC key missing key material"));
-                }
-            }
-            else {
-                Log.error("Unsupported key type", key && key.kty);
-                return Promise.reject(new Error("Unsupported key type: " + key && key.kty));
-            }
 
+            // if (key.kty === "RSA") {
+            //     if (key.e && key.n) {
+            //         key = KeyUtil.getKey(key);
+            //     }
+            //     else if (key.x5c && key.x5c.length) {
+            //         key = KeyUtil.getKey(X509.getPublicKeyFromCertPEM(key.x5c[0]));
+            //     }
+            //     else {
+            //         Log.error("RSA key missing key material", key);
+            //         return Promise.reject(new Error("RSA key missing key material"));
+            //     }
+            // }
+            // else if (key.kty === "EC") {
+            //     if (key.crv && key.x && key.y) {
+            //         key = KeyUtil.getKey(key);
+            //     }
+            //     else {
+            //         Log.error("EC key missing key material", key);
+            //         return Promise.reject(new Error("EC key missing key material"));
+            //     }
+            // }
+            // else {
+            //     Log.error("Unsupported key type", key && key.kty);
+            //     return Promise.reject(new Error("Unsupported key type: " + key && key.kty));
+            // }
+            //
             return JoseUtil._validateJwt(jwt, key, issuer, audience, clockSkew, now);
         }
         catch (e) {
@@ -62,6 +71,13 @@ export default class JoseUtil {
 
     static _validateJwt(jwt, key, issuer, audience, clockSkew, now) {
         Log.debug("JoseUtil._validateJwt");
+        const parameters = {
+            issuer,
+            audience,
+            leeway: clockSkew,
+            expectedAlg: 'RS256'
+        }
+        const idTokenVerifier = new IdTokenVerifier(parameters)
 
         if (!clockSkew) {
             clockSkew = 0;
@@ -119,8 +135,8 @@ export default class JoseUtil {
         }
 
         try {
-            if (!jws.JWS.verify(jwt, key, AllowedSigningAlgs)) {
-                Log.error("signature validation failed");
+            // if (!jws.JWS.verify(jwt, key, AllowedSigningAlgs)) {
+            if (!idTokenVerifier.verify(jwt)) {
                 return Promise.reject(new Error("signature validation failed"));
             }
         }

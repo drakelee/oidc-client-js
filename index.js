@@ -1,21 +1,21 @@
 // Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-export const Log = require('./src/Log');
-export const OidcClient = require('./src/OidcClient');
-export const OidcClientSettings = require('./src/OidcClientSettings');
-export const WebStorageStateStore = require('./src/WebStorageStateStore');
-export const InMemoryWebStorage = require('./src/InMemoryWebStorage');
-export const UserManager = require('./src/UserManager');
-export const AccessTokenEvents = require('./src/AccessTokenEvents');
-export const MetadataService = require('./src/MetadataService');
-export const CordovaPopupNavigator = require('./src/CordovaPopupNavigator');
-export const CordovaIFrameNavigator = require('./src/CordovaIFrameNavigator');
-export const CheckSessionIFrame = require('./src/CheckSessionIFrame');
-export const TokenRevocationClient = require('./src/TokenRevocationClient');
-export const SessionMonitor = require('./src/SessionMonitor');
-export const Global = require('./src/Global');
-export const User = require('./src/User');
+export const Log = require('./src/Log').default;
+export const OidcClient = require('./src/OidcClient').default;
+export const OidcClientSettings = require('./src/OidcClientSettings').default;
+export const WebStorageStateStore = require('./src/WebStorageStateStore').default;
+export const InMemoryWebStorage = require('./src/InMemoryWebStorage').default;
+export const UserManager = require('./src/UserManager').default;
+export const AccessTokenEvents = require('./src/AccessTokenEvents').default;
+export const MetadataService = require('./src/MetadataService').default;
+export const CordovaPopupNavigator = require('./src/CordovaPopupNavigator').default;
+export const CordovaIFrameNavigator = require('./src/CordovaIFrameNavigator').default;
+export const CheckSessionIFrame = require('./src/CheckSessionIFrame').default;
+export const TokenRevocationClient = require('./src/TokenRevocationClient').default;
+export const SessionMonitor = require('./src/SessionMonitor').default;
+export const Global = require('./src/Global').default;
+export const User = require('./src/User').default;
 
 export default {
     Log,
