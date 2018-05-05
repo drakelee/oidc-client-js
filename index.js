@@ -9,8 +9,6 @@ export const InMemoryWebStorage = require('./src/InMemoryWebStorage').default;
 export const UserManager = require('./src/UserManager').default;
 export const AccessTokenEvents = require('./src/AccessTokenEvents').default;
 export const MetadataService = require('./src/MetadataService').default;
-export const CordovaPopupNavigator = require('./src/CordovaPopupNavigator').default;
-export const CordovaIFrameNavigator = require('./src/CordovaIFrameNavigator').default;
 export const CheckSessionIFrame = require('./src/CheckSessionIFrame').default;
 export const TokenRevocationClient = require('./src/TokenRevocationClient').default;
 export const SessionMonitor = require('./src/SessionMonitor').default;
@@ -26,8 +24,6 @@ export default {
     UserManager,
     AccessTokenEvents,
     MetadataService,
-    CordovaPopupNavigator,
-    CordovaIFrameNavigator,
     CheckSessionIFrame,
     TokenRevocationClient,
     SessionMonitor,

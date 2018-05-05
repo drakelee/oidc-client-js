@@ -150,9 +150,6 @@ export class UserManager extends OidcClient {
   storeUser(user:User): Promise<void>;
   removeUser(): Promise<void>;
 
-  signinPopup(args?: any): Promise<User>;
-  signinPopupCallback(url?: string): Promise<any>;
-
   signinSilent(args?: any): Promise<User>;
   signinSilentCallback(url?: string): Promise<any>;
 
@@ -161,10 +158,6 @@ export class UserManager extends OidcClient {
 
   signoutRedirect(args?: any): Promise<any>;
   signoutRedirectCallback(url?: string): Promise<any>;
-
-  signoutPopup(args?: any): Promise<any>;
-  signoutPopupCallback(url?: string, keepOpen?: boolean): Promise<void>;
-  signoutPopupCallback(keepOpen?: boolean): Promise<void>;
 
   querySessionStatus(args?: any): Promise<any>;
 
@@ -278,18 +271,4 @@ export class User {
   readonly expires_in: number | undefined;
   readonly expired: boolean | undefined;
   readonly scopes: string[];
-}
-
-export class CordovaPopupWindow {
-  constructor(params: any);
-  navigate(params: any): Promise<any>;
-  promise: Promise<any>;
-}
-
-export class CordovaPopupNavigator {
-  prepare(params: any): Promise<CordovaPopupWindow>;
-}
-
-export class CordovaIFrameNavigator {
-  prepare(params: any): Promise<CordovaPopupWindow>;
 }
