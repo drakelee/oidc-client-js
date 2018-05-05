@@ -26,7 +26,6 @@ export default class UserManagerSettings extends OidcClientSettings {
         revokeAccessTokenOnSignout = false,
         accessTokenExpiringNotificationTime = DefaultAccessTokenExpiringNotificationTime,
         redirectNavigator = new RedirectNavigator(),
-        popupNavigator = new PopupNavigator(),
         iframeNavigator = new IFrameNavigator(),
         userStore = new WebStorageStateStore({ store: Global.sessionStorage })
     } = {}) {
@@ -48,7 +47,6 @@ export default class UserManagerSettings extends OidcClientSettings {
         this._revokeAccessTokenOnSignout = revokeAccessTokenOnSignout;
 
         this._redirectNavigator = redirectNavigator;
-        this._popupNavigator = popupNavigator;
         this._iframeNavigator = iframeNavigator;
         
         this._userStore = userStore;
@@ -96,9 +94,7 @@ export default class UserManagerSettings extends OidcClientSettings {
     get redirectNavigator() {
         return this._redirectNavigator;
     }
-    get popupNavigator() {
-        return this._popupNavigator;
-    }
+
     get iframeNavigator() {
         return this._iframeNavigator;
     }
